@@ -1,0 +1,155 @@
+body{
+    background-color: #3a3a3a;
+}
+
+.container-full{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.left-section{
+    height: 100%;
+}
+
+.right-section{
+    height: 100%;
+    background-color: #606060;
+}
+
+.page-section{
+    height: 100%;
+    padding: 20px;
+}
+
+.section-part{
+    background-color: #606060;
+    height: calc((100% - 40px) / 3);
+}
+
+.section-part-secondary{
+    margin-top: 20px;
+    background-color: #606060;
+    height: calc((100% - 40px) / 3);
+}
+
+.section-header{
+    background-color: #282828;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 20px;
+    font-size: 25px;
+    color: white;
+}
+
+.item-list{
+    margin: 10px;
+    height: calc(100% - 20px - 80px);
+    overflow: hidden;
+    overflow-y: scroll;
+    border-radius: 5px;
+    border: 2px solid rgba(132,132,132,0.5);
+    background-color: rgba(132,132,132,0.3);
+}
+
+.secondary-grid-row{
+    margin: 0px;
+    height: 33%;
+    padding: 10px;
+}
+
+.status-column{
+    height: 100%;
+    color: white;
+    text-align: center;
+}
+
+table{
+    width: calc(100% - 20px);
+    margin: 10px 5px 5px 10px;
+    color: white;
+}
+
+.buffPos{
+    width: 90px;
+}
+
+.pNo{
+    width: 70px;
+}
+
+td{
+    height: 25px;
+}
+
+tr{
+    border-bottom: 2px solid #a5a5a5;
+}
+
+/* SCROLLBAR STYLING */
+::-webkit-scrollbar{
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.8); 
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(193,193,193,0.8); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+	background: rgba(255,0,0,0.4); 
+}
+
+/* OVERLAY STYLING */
+#overlay{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.85);
+    z-index: 1;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+#overlaycontent{
+    position: relative;
+    top: 25%;
+    left: calc(50% - 200px);
+    background-color: dimgray;
+    width: 400px;
+    height: 200px;
+    border-radius: 10px;
+}
+
+#spinner{
+    border: 10px solid gray;
+    border-top: 10px solid white;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    animation: spinAnimation 2s linear infinite;
+    position: relative;
+    top: calc(50% - 50px);
+    left: 5%;
+}
+
+#spinner-text{
+    font-size: 30px;
+    margin-left: 180px;
+    margin-top: -40px;
+    color: white;
+}
+
+@keyframes spinAnimation{
+    0% {transform: rotate(0deg);}
+    100%{transform: rotate(360deg);}
+}

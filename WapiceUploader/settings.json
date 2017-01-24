@@ -1,0 +1,20 @@
+{
+  "serverSettings": {
+    "port": 28862
+  },
+  "iotSettings": {
+    "useWapice" : false,
+    "url": "https://my.iot-ticket.com/api/v1",
+    "username": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "password": "XXXXXXXXXX",
+    "configuredDevice": {
+      "deviceId": "a8b06d4ceeaf4af1931913085526d79c",
+      "href": "http://127.0.0.1:8080/api/v1/devices/a8b06d4ceeaf4af1931913085526d79c",
+      "name": "testi1",
+      "manufacturer": "seamk"
+    }
+  },
+  "databaseSettings": {
+    "filePath": "C://Users/Jarno/Desktop/IoT/FestoMES.accdb"
+  }
+}
