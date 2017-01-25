@@ -20,7 +20,6 @@ function Gauge(parameters)
         this.radius = this.width / 2;
     
     window.addEventListener("resize", this.reDraw.bind(this));
-   // document.body.onresize += this.reDraw.bind(this);
 }
 
 Gauge.prototype.reDraw = function()
@@ -90,6 +89,11 @@ Gauge.prototype.drawText = function(data)
     var text = data;
     if(data % 1 == 0)
         text += ".0";
+    var val = Number(text);
+    if(!this.useDecimals)
+        text = Math.round(val);
+    else
+        text = val;
     text += this.suffix;
     var textWidth = this.context.measureText(text).width;
     this.context.fillText(text, this.width / 2 - textWidth/2, this.height / 2 + (fontSize / 4));

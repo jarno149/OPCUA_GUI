@@ -10,13 +10,18 @@
         <script src="https://www.gstatic.com/charts/loader.js"></script>
         <script src="/js/barchart.js"></script>
         <script src="/js/gauge.js"></script>
+        <script src="/js/indicator.js"></script>
+        <script src="/js/scripts.js"></script>
         
         <script>
             /*<![CDATA[*/
             // WebSocketHandling
             
+            /*
+            
             var highBayRackGauge;
             var pcbTrayGauge;
+            var robotIsWorkingIndicator;
             
            // var ws = new WebSocket("ws://localhost:28862/ws");
             var url = window.location + "ws";
@@ -53,7 +58,7 @@
                 {
                     if(parsedJson.identifier != undefined)
                     {
-                        robotIsHome(parsedJson.value);
+                        updateRobotIsWorking(parsedJson.value);
                     }
                     else if(parsedJson.bufPos != undefined && parsedJson.pNo != undefined)
                     {
@@ -103,33 +108,18 @@
                 updatePcbTrayGauge(counter);
             }
             
-            function robotIsHome(boolVal)
-            {
-                var indicator = document.getElementById("test");
-                if(boolVal != "true")
-                {
-                    indicator.style.color = "green";
-                    indicator.innerHTML = "ROBOT IS WORKING: YES";
-                }
-                else
-                {
-                    indicator.style.color = "red";
-                    indicator.innerHTML = "ROBOT IS WORKING: NO";
-                }
-            }
-            
             function addPcbTrayItem(item)
             {
                 var existingItem = document.getElementById("PcbTrayItem" + item.boxPos);
                 if(existingItem != undefined)
                 {
-                    existingItem.innerHTML = '<td class="rowId">' + item.boxPos + '</td><td class="pNo">'
+                    existingItem.innerHTML = '<td class="boxPos">' + item.boxPos + '</td><td class="pNo">'
                     + item.pNo + '</td><td>' + item.description + '</td>';
                 }
                 else
                 {
                     var container = document.getElementById("pcbTrayTable");
-                    container.innerHTML += '<tr id="PcbTrayItem' + item.boxPos + '"><td class="rowId">' + item.boxPos + '</td><td class="pNo">'
+                    container.innerHTML += '<tr id="PcbTrayItem' + item.boxPos + '"><td class="boxPos">' + item.boxPos + '</td><td class="pNo">'
                     + item.pNo + '</td><td>' + item.description + '</td></tr>';
                 }
             }
@@ -139,30 +129,31 @@
                 var existingItem = document.getElementById("HighBayRackItem" + item.bufPos);
                 if(existingItem != undefined)
                 {
-                    existingItem.innerHTML = '<td class="rowId">' + item.bufPos + '</td><td class="pNo">'
+                    existingItem.innerHTML = '<td class="bufPos">' + item.bufPos + '</td><td class="pNo">'
                     + item.pNo + '</td><td>' + item.description + '</td>';
                 }
                 else
                 {
                     var container = document.getElementById("highBayRackTable");
-                    container.innerHTML += '<tr id="HighBayRackItem' + item.bufPos + '"><td class="rowId">' + item.bufPos + '</td><td class="pNo">' + item.pNo 
+                    container.innerHTML += '<tr id="HighBayRackItem' + item.bufPos + '"><td class="bufPos">' + item.bufPos + '</td><td class="pNo">' + item.pNo 
                     + '</td><td>' + item.description + '</td></tr>';
                 }
             }
+            
             
             function addManufacturingItem(item)
             {
                 var existingItem = document.getElementById("ManufacturingItem" + item.oNo);
                 if(existingItem != undefined)
                 {
-                    existingItem.innerHTML = '<td class="rowId">' + item.pNo + '</td><td class="pNo">'
-                    + item.pNo + '</td><td>' + item.state + '</td><td>' + item.description + '</td>';
+                    existingItem.innerHTML = '<td class="oNo">' + item.oNo + '</td><td class="pNo">'
+                    + item.pNo + '</td><td class="state">' + item.state + '</td><td>' + item.description + '</td>';
                 }
                 else
                 {
                     var container = document.getElementById("manuFacturingOrderTable");
-                    container.innerHTML += '<tr id="ManufacturingItem' + item.oNo + '"><td class="rowId">' + item.oNo + '</td><td class="pNo">' + item.pNo
-                    + '</td><td>' + item.state + '</td><td>' + item.description + '</td></tr>';
+                    container.innerHTML += '<tr id="ManufacturingItem' + item.oNo + '"><td class="oNo">' + item.oNo + '</td><td class="pNo">' + item.pNo
+                    + '</td><td class="state">' + item.state + '</td><td>' + item.description + '</td></tr>';
                 }
             }
             
@@ -174,6 +165,7 @@
                 
                 updateHighBayRackGauge();
                 updatePcbTrayGauge();
+                updateRobotIsWorking();
             };
             
             function hide()
@@ -182,11 +174,26 @@
                 document.getElementById("overlay").style.height = "0%";
             }
             
+            function updateRobotIsWorking(status)
+            {
+                if(robotIsWorkingIndicator == undefined)
+                {
+                    robotIsWorkingIndicator = new Indicator({ containerId : "robotIsWorkingIndicator"});
+                }
+                else
+                {
+                    if(status == "false")
+                        robotIsWorkingIndicator.draw("green");
+                    else
+                        robotIsWorkingIndicator.draw("red");
+                }
+            }
+            
             function updateHighBayRackGauge(newValue)
             {
                 if(highBayRackGauge == undefined)
                 {
-                    highBayRackGauge = new Gauge({ containerId: "HighBayRackGauge", minValue : 0, maxValue : 32, color : "#8bfc83", useDecimals : false });
+                    highBayRackGauge = new Gauge({ containerId: "HighBayRackGauge", minValue : 0, maxValue : 32, color : "#8bfc83", useDecimals : false, suffix: "/32" });
                 }
                 highBayRackGauge.update(newValue);
             }
@@ -195,11 +202,11 @@
             {
                 if(pcbTrayGauge == undefined)
                 {
-                    pcbTrayGauge = new Gauge({containerId : "PcbTrayGauge", minValue : 0, maxValue : 12, color : "#ffcb5b", useDecimals : false });
+                    pcbTrayGauge = new Gauge({containerId : "PcbTrayGauge", minValue : 0, maxValue : 12, color : "#ffcb5b", useDecimals : false, suffix : "/12" });
                 }
                 pcbTrayGauge.update(newValue);
             }
-            
+            */
             /*]]>*/
         </script>
         
@@ -213,8 +220,8 @@
                             <div class="section-header">
                                 <p>HIGHBAYRACK</p>
                             </div>
-                            <table>
-                                <td class="rowId">BufPos</td>
+                            <table class="header-table">
+                                <td class="bufPos">BufPos</td>
                                 <td class="pNo">PNo</td>
                                 <td>Description</td>
                             </table>
@@ -222,15 +229,13 @@
                                 <table id="highBayRackTable">
                                 </table>
                             </div>
-                            
-                            
                         </div>
                         <div class="section-part-secondary">
                             <div class="section-header">
                                 <p>PCBTRAY</p>
                             </div>
-                            <table>
-                                <td class="rowId">BoxPos</td>
+                            <table class="header-table">
+                                <td class="boxPos">BoxPos</td>
                                 <td class="pNo">pNo</td>
                                 <td>Description</td>
                             </table>
@@ -244,15 +249,17 @@
                             <div class="section-header">
                                 <p>MANUFACTURING ORDERS</p>
                             </div>
-                            <table>
-                                <td class="rowId">ONo</td>
+                            <table class="header-table">
+                                <td class="oNo">ONo</td>
                                 <td class="pNo">PNo</td>
-                                <td>State</td>
+                                <td class="state">State</td>
                                 <td>Description</td>
                             </table>
                             <div class="item-list">
                                 <table id="manuFacturingOrderTable">
-                                    
+                                    <tr>
+                                        
+                                    </tr>
                                 </table>
                             </div>
                         </div>
@@ -273,9 +280,15 @@
                                 <p>PCBTRAY ITEM STATUS</p>
                             </div>
                         </div>
-                        
-                        <!-- THIS IS FOR TESTING! -->
-                        <h1 id="test" style="color: white;">ROBOT IS WORKING: UNDEFINED</h1>
+                        <div class="row secondary-grid-row">
+                            <div class="col-sm-6 status-column">
+                                <div id="robotIsWorkingIndicator" style="height: 80%; width: 100%;"></div>
+                                <p>ROBOT IS WORKING</p>
+                            </div>
+                            <div class="col-sm-6 status-column">
+                                
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

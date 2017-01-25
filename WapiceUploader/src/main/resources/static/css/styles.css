@@ -69,11 +69,29 @@ table{
     color: white;
 }
 
-.buffPos{
-    width: 90px;
+.header-table{
+    margin-left: 20px;
+    margin-right: 30px;
+    width: calc(100% - 50px);
+}
+
+.bufPos{
+    width: 70px;
+}
+
+.boxPos{
+    width: 70px;
+}
+
+.oNo{
+    width: 70px;
 }
 
 .pNo{
+    width: 70px;
+}
+
+.state{
     width: 70px;
 }
 

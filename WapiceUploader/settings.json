@@ -15,6 +15,6 @@
     }
   },
   "databaseSettings": {
-    "filePath": "Z:/FestoMES.accdb"
+    "filePath": "/Users/jarno/Desktop/IoT/FestoMES.accdb"
   }
 }
