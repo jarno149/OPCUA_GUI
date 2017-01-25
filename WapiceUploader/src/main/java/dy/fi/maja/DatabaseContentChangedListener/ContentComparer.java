@@ -18,6 +18,7 @@ import org.javers.core.diff.Diff;
 import org.javers.core.diff.ListCompareAlgorithm;
 import org.javers.core.diff.changetype.NewObject;
 import org.javers.core.diff.changetype.ValueChange;
+import org.javers.core.diff.changetype.ObjectRemoved;
 
 /**
  *
@@ -61,6 +62,7 @@ public class ContentComparer
         
         List<WorkOrder> modifiedObjects = diff.getObjectsByChangeType(ValueChange.class);
         List<WorkOrder> createdObjects = diff.getObjectsByChangeType(NewObject.class);
+        List<WorkOrder> removedObjects = diff.getObjectsByChangeType(ObjectRemoved.class);
         
         for(WorkOrder o : modifiedObjects)
         {
@@ -72,6 +74,8 @@ public class ContentComparer
         }
         
         DatabaseContent.workOrders = newResult;
+        if(removedObjects.size() > 0)
+            return newResult;
         return changedObjects.toArray(new WorkOrder[0]);
     }
     
@@ -86,6 +90,7 @@ public class ContentComparer
         
         List<ManuFacturingOrder> modifiedObjects = diff.getObjectsByChangeType(ValueChange.class);
         List<ManuFacturingOrder> createdObjects = diff.getObjectsByChangeType(NewObject.class);
+        List<ManuFacturingOrder> removedObjects = diff.getObjectsByChangeType(ObjectRemoved.class);
         
         for(ManuFacturingOrder o : modifiedObjects)
         {
@@ -97,6 +102,8 @@ public class ContentComparer
         }
         
         DatabaseContent.manuFacturingOrders = newResult;
+        if(removedObjects.size() > 0)
+            return newResult;
         return changedObjects.toArray(new ManuFacturingOrder[0]);
     }
     

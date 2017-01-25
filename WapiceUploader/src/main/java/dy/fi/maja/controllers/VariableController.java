@@ -29,7 +29,8 @@ public class VariableController
     public void incomingVariables(@RequestBody OPCUAVariable variable)
     {
         Gson g = new Gson();
-        System.out.println(g.toJson(variable));
+        if(variable.getValue() == "true" || variable.getValue() == "false")
+            System.out.println(g.toJson(variable));
         
         // Send data to webpages
         sendLiveDataToWebpage(variable);

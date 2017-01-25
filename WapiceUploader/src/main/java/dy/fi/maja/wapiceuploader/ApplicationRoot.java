@@ -119,6 +119,7 @@ public class ApplicationRoot
 
                     PCBBox[] pCBBoxNewResult = DBRepo.getPCBBoxes();
                     PCBBox[] pCBBoxChanges = ContentComparer.comparePcbBoxesForChanges(pCBBoxNewResult);
+                    System.out.println("PCBBocxChanges: " + pCBBoxChanges.length);
                     if (pCBBoxChanges.length > 0 && wapiceEnabled)
                     {
                         Wapice.writePCBBoxes(deviceId, pCBBoxChanges);
@@ -128,6 +129,7 @@ public class ApplicationRoot
 
                     ManuFacturingOrder[] manuFacturingOrdersNewResult = DBRepo.getManuFacturingOrders();
                     ManuFacturingOrder[] manuFacturingOrdersChanges = ContentComparer.compareManuFacturingOrdersForChanges(manuFacturingOrdersNewResult);
+                    System.out.println("ManuFacturingOrderChanges: " + manuFacturingOrdersChanges.length);
                     if (manuFacturingOrdersChanges.length > 0 && wapiceEnabled)
                     {
                         Wapice.writeManufacturingOrders(deviceId, manuFacturingOrdersChanges);
@@ -137,6 +139,7 @@ public class ApplicationRoot
 
                     WorkOrder[] workOrdersNewResult = DBRepo.getWorkOrders();
                     WorkOrder[] workOrdersChanges = ContentComparer.compareWorkOrdersForChanges(workOrdersNewResult);
+                    System.out.println("WorkOrderChanges: " + workOrdersChanges.length);
                     if (workOrdersChanges.length > 0 && wapiceEnabled)
                     {
                         Wapice.writeWorkOrders(deviceId, workOrdersChanges);
@@ -146,6 +149,7 @@ public class ApplicationRoot
 
                     HighBayRack[] highBayRacksNewResult = DBRepo.getHighBayRacks();
                     HighBayRack[] highBayRacksChanges = ContentComparer.compareHighBayRacksForChanges(highBayRacksNewResult);
+                    System.out.println("HighbayRackChanges: " + highBayRacksChanges.length);
                     if (highBayRacksChanges.length > 0 && wapiceEnabled)
                     {
                         Wapice.writeHighBayRack(deviceId, highBayRacksChanges);

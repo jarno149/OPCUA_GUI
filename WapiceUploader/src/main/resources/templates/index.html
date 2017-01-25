@@ -43,6 +43,10 @@
                         {
                             addPcbTrayItem(obj);
                         }
+                        else if(obj.oNo != undefined)
+                        {
+                            addManufacturingItem(obj);
+                        }
                     }   
                 }
                 else
@@ -58,6 +62,10 @@
                     else if(parsedJson.bufPos != undefined && parsedJson.oNo != undefined)
                     {
                         addPcbTrayItem(parsedJson);
+                    }
+                    else if(obj.oNo != undefined)
+                    {
+                        addManufacturingItem(parsedJson);
                     }
                 }
                 
@@ -97,7 +105,8 @@
             
             function robotIsHome(boolVal)
             {
-                if(boolVal == "true")
+                var indicator = document.getElementById("test");
+                if(boolVal != "true")
                 {
                     indicator.style.color = "green";
                     indicator.innerHTML = "ROBOT IS WORKING: YES";
@@ -138,6 +147,22 @@
                     var container = document.getElementById("highBayRackTable");
                     container.innerHTML += '<tr id="HighBayRackItem' + item.bufPos + '"><td class="rowId">' + item.bufPos + '</td><td class="pNo">' + item.pNo 
                     + '</td><td>' + item.description + '</td></tr>';
+                }
+            }
+            
+            function addManufacturingItem(item)
+            {
+                var existingItem = document.getElementById("ManufacturingItem" + item.oNo);
+                if(existingItem != undefined)
+                {
+                    existingItem.innerHTML = '<td class="rowId">' + item.pNo + '</td><td class="pNo">'
+                    + item.pNo + '</td><td>' + item.state + '</td><td>' + item.description + '</td>';
+                }
+                else
+                {
+                    var container = document.getElementById("manuFacturingOrderTable");
+                    container.innerHTML += '<tr id="ManufacturingItem' + item.oNo + '"><td class="rowId">' + item.oNo + '</td><td class="pNo">' + item.pNo
+                    + '</td><td>' + item.state + '</td><td>' + item.description + '</td></tr>';
                 }
             }
             
@@ -217,7 +242,18 @@
                         </div>
                         <div class="section-part-secondary">
                             <div class="section-header">
-                                <p>ORDERS</p>
+                                <p>MANUFACTURING ORDERS</p>
+                            </div>
+                            <table>
+                                <td class="rowId">ONo</td>
+                                <td class="pNo">PNo</td>
+                                <td>State</td>
+                                <td>Description</td>
+                            </table>
+                            <div class="item-list">
+                                <table id="manuFacturingOrderTable">
+                                    
+                                </table>
                             </div>
                         </div>
                     </div>
