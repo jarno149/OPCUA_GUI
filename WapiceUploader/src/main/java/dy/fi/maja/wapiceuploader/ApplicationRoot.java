@@ -134,8 +134,8 @@ public class ApplicationRoot
                     {
                         Wapice.writeManufacturingOrders(deviceId, manuFacturingOrdersChanges);
                     }
-                    if(manuFacturingOrdersChanges.length > 0)
-                       WebSocketController.SendMessageToAll(g.toJson(manuFacturingOrdersChanges));   
+                    if(manuFacturingOrdersNewResult.length > 0)
+                       WebSocketController.SendMessageToAll(g.toJson(manuFacturingOrdersNewResult));   
 
                     WorkOrder[] workOrdersNewResult = DBRepo.getWorkOrders();
                     WorkOrder[] workOrdersChanges = ContentComparer.compareWorkOrdersForChanges(workOrdersNewResult);

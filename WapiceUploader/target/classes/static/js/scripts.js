@@ -46,7 +46,7 @@ function incomingWebsocketMessage(m)
                 addPcbTrayItem(obj);
             } else if (obj.oNo != undefined)
             {
-                addManufacturingItem(obj);
+                addManufacturingItem(obj, i);
             }
         }
     } else
@@ -62,7 +62,7 @@ function incomingWebsocketMessage(m)
             addPcbTrayItem(parsedJson);
         } else if (obj.oNo != undefined)
         {
-            addManufacturingItem(parsedJson);
+            addManufacturingItem(parsedJson, 1);
         }
     }
 
@@ -76,8 +76,13 @@ function hideOverlay()
     document.getElementById("overlay").style.height = "0%";
 }
 
-function addManufacturingItem(item)
+function addManufacturingItem(item, index)
 {
+    // Clear table if item index is 0
+    if(index < 1)
+    {
+        document.getElementById("manuFacturingOrderTable").innerHTML = "";
+    }
     var existingItem = document.getElementById("ManufacturingItem" + item.oNo);
     if (existingItem != undefined)
     {
